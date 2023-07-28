@@ -1,5 +1,6 @@
 import { test } from '@playwright/test'
 import { ProductsPage } from '../page-objects/ProductsPage'
+import { Navigation } from '../page-objects/Navigation'
 
 test.only('User full end-to-end test journey', async ({ page }) => {
   let productsPage = new ProductsPage(page)
@@ -7,6 +8,6 @@ test.only('User full end-to-end test journey', async ({ page }) => {
   await productsPage.addProductToBacket(0)
   await productsPage.addProductToBacket(1)
   await productsPage.addProductToBacket(2)
-  await page.pause()
-  //await page.pause();
+  const navigation = new Navigation(page)
+  await navigation.goToCheckOut()
 })
