@@ -1,8 +1,12 @@
 import { test } from '@playwright/test'
-import { ProductPage } from '../page-objects/ProductPage'
+import { ProductsPage } from '../page-objects/ProductsPage'
 
 test.only('User full end-to-end test journey', async ({ page }) => {
-  let productPage = new ProductPage(page)
-  await productPage.visit()
+  let productsPage = new ProductsPage(page)
+  await productsPage.visit()
+  await productsPage.addProductToBacket(0)
+  await productsPage.addProductToBacket(1)
+  await productsPage.addProductToBacket(2)
+  await page.pause()
   //await page.pause();
 })
