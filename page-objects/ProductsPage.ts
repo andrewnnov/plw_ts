@@ -8,7 +8,6 @@ export class ProductsPage {
   readonly sortDropdown: Locator
   readonly productTitle: Locator
 
-
   constructor(page: Page) {
     this.page = page
     this.addToBasketButtons = page.locator(
@@ -42,12 +41,11 @@ export class ProductsPage {
     //get order of products
     await this.productTitle.first().waitFor()
     const productTitleBeforeSorting = await this.productTitle.allInnerTexts()
-    await this.sortDropdown.selectOption("price-asc")
+    await this.sortDropdown.selectOption('price-asc')
     //get order of products
     const productTitleAfterSorting = await this.productTitle.allInnerTexts()
     //expect that these lists are different
     expect(productTitleAfterSorting).not.toEqual(productTitleBeforeSorting)
-    await this.page.pause()
-
+    //await this.page.pause()
   }
 }

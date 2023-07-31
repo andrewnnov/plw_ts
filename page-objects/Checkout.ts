@@ -6,6 +6,7 @@ export class Checkout {
   readonly baskerCards: Locator
   readonly basketItemPrice: Locator
   readonly removeFromBasketBtn: Locator
+  readonly contunuetToCheckoutBtn: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -13,6 +14,9 @@ export class Checkout {
     this.basketItemPrice = page.locator("//div[@data-qa= 'basket-item-price']")
     this.removeFromBasketBtn = page.locator(
       "//button[@data-qa= 'basket-card-remove-item']",
+    )
+    this.contunuetToCheckoutBtn = page.locator(
+      "//button[@data-qa='continue-to-checkout']",
     )
   }
 
@@ -34,6 +38,12 @@ export class Checkout {
     await specificRemoveBtn.waitFor()
     await specificRemoveBtn.click()
     await expect(this.baskerCards).toHaveCount(itemsBeforeRemoval - 1)
-    await this.page.pause()
+    //await this.page.pause()
+  }
+
+  continueToCheckout = async () => {
+    await this.contunuetToCheckoutBtn.waitFor()
+    await this.contunuetToCheckoutBtn.click()
+    await this.page.waitForURL(/\/login/, { timeout: 3000 })
   }
 }
