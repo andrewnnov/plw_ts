@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test'
+import { Page, Locator, expect } from '@playwright/test'
 
 export class DeliveryDetailsPage {
   readonly page: Page
@@ -8,6 +8,14 @@ export class DeliveryDetailsPage {
   readonly postCodeInput: Locator
   readonly cityInput: Locator
   readonly countryDropDown: Locator
+  readonly saveAddressBtn: Locator
+  readonly saveAddressContainer: Locator
+  readonly saveAddressFirstName: Locator
+  readonly saveAddressLastName: Locator
+  readonly saveAddressStreet: Locator
+  readonly saveAddressPostCode: Locator
+  readonly saveAddressCity: Locator
+  readonly saveAddressCountry: Locator
 
   constructor(page) {
     this.page = page
@@ -21,6 +29,28 @@ export class DeliveryDetailsPage {
     this.postCodeInput = page.locator("//input[@data-qa='delivery-postcode']")
     this.cityInput = page.locator("//input[@data-qa='delivery-city']")
     this.countryDropDown = page.locator("//select[@data-qa='country-dropdown']")
+    this.saveAddressBtn = page.getByRole('button', {
+      name: 'Save address for next time',
+    })
+    this.saveAddressContainer = page.locator(
+      "//div[@data-qa='saved-address-container']",
+    )
+    this.saveAddressFirstName = page.locator(
+      "//p[@data-qa='saved-address-firstName']",
+    )
+    this.saveAddressLastName = page.locator(
+      "//p[@data-qa='saved-address-lastName']",
+    )
+    this.saveAddressStreet = page.locator(
+      "//p[@data-qa='saved-address-street']",
+    )
+    this.saveAddressPostCode = page.locator(
+      "//p[@data-qa='saved-address-postcode']",
+    )
+    this.saveAddressCity = page.locator("//p[@data-qa='saved-address-city']")
+    this.saveAddressCountry = page.locator(
+      "//p[@data-qa='saved-address-country']",
+    )
   }
 
   fillDetails = async (deleveryDetails) => {
@@ -36,6 +66,22 @@ export class DeliveryDetailsPage {
     await this.cityInput.fill(deleveryDetails.city)
     await this.countryDropDown.waitFor()
     await this.countryDropDown.selectOption(deleveryDetails.country)
+  }
+
+  saveDetails = async () => {
+    const addressCountBeforeSaving = await this.saveAddressContainer.count()
+    console.warn(addressCountBeforeSaving)
+    await this.saveAddressBtn.waitFor()
+    await this.saveAddressBtn.click()
+    await this.saveAddressContainer.waitFor()
+    await expect(this.saveAddressContainer).toHaveCount(
+      addressCountBeforeSaving + 1,
+    )
+    await this.saveAddressFirstName.first().waitFor()
+    expect(await this.saveAddressFirstName.first().innerText()).toBe(
+      await this.firstNameInput.inputValue(),
+    )
+
     await this.page.pause()
   }
 }

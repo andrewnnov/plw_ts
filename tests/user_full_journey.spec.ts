@@ -33,4 +33,6 @@ test.only('User full end-to-end test journey', async ({ page }) => {
 
   const deliveryDetailsPage = new DeliveryDetailsPage(page)
   await deliveryDetailsPage.fillDetails(deleveryDetails)
+
+  await deliveryDetailsPage.saveDetails()
 })
