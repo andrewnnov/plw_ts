@@ -16,6 +16,7 @@ export class DeliveryDetailsPage {
   readonly saveAddressPostCode: Locator
   readonly saveAddressCity: Locator
   readonly saveAddressCountry: Locator
+  readonly continueToPaymentBtn: Locator
 
   constructor(page) {
     this.page = page
@@ -51,6 +52,10 @@ export class DeliveryDetailsPage {
     this.saveAddressCountry = page.locator(
       "//p[@data-qa='saved-address-country']",
     )
+
+    this.continueToPaymentBtn = page.locator(
+      "//button[@data-qa='continue-to-payment-button']",
+    )
   }
 
   fillDetails = async (deleveryDetails) => {
@@ -81,7 +86,12 @@ export class DeliveryDetailsPage {
     expect(await this.saveAddressFirstName.first().innerText()).toBe(
       await this.firstNameInput.inputValue(),
     )
+  }
 
-    await this.page.pause()
+  continueToPayment = async () => {
+    await this.continueToPaymentBtn.waitFor()
+    await this.continueToPaymentBtn.click()
+    await this.page.waitForURL(/\/payment/, { timeout: 3000 })
+    
   }
 }
