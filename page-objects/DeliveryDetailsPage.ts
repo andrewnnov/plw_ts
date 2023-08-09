@@ -75,7 +75,7 @@ export class DeliveryDetailsPage {
 
   saveDetails = async () => {
     const addressCountBeforeSaving = await this.saveAddressContainer.count()
-    console.warn(addressCountBeforeSaving)
+    
     await this.saveAddressBtn.waitFor()
     await this.saveAddressBtn.click()
     await this.saveAddressContainer.waitFor()
@@ -92,6 +92,5 @@ export class DeliveryDetailsPage {
     await this.continueToPaymentBtn.waitFor()
     await this.continueToPaymentBtn.click()
     await this.page.waitForURL(/\/payment/, { timeout: 3000 })
-    
   }
 }
