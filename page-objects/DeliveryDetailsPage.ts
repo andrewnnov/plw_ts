@@ -75,7 +75,7 @@ export class DeliveryDetailsPage {
 
   saveDetails = async () => {
     const addressCountBeforeSaving = await this.saveAddressContainer.count()
-    
+
     await this.saveAddressBtn.waitFor()
     await this.saveAddressBtn.click()
     await this.saveAddressContainer.waitFor()
