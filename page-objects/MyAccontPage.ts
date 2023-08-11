@@ -1,14 +1,17 @@
-import { Locator, Page } from '@playwright/test'
+import { Locator, Page } from "@playwright/test";
+
 
 export class MyAccountPage {
-  readonly page: Page
+    readonly page: Page
+    
 
-  constructor(page) {
-    this.page = page
-  }
+    constructor(page) {
+        this.page = page
+    }
 
-  visit = async () => {
-    await this.page.goto('http://localhost:2221/my-account')
-    await this.page.pause()
-  }
+    visit = async () => {
+        
+        await this.page.goto("http://localhost:2221/my-account")
+        await this.page.pause()
+    }
 }
